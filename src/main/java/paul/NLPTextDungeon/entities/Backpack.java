@@ -3,6 +3,7 @@ package paul.NLPTextDungeon.entities;
 import paul.NLPTextDungeon.interfaces.listeners.OnPickup;
 import paul.NLPTextDungeon.utils.VictoryException;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -13,9 +14,16 @@ import java.util.stream.Stream;
 /**
  * Created by Paul Dennis on 8/10/2017.
  */
+@Entity
+@Table (name = "backpacks")
 public class Backpack extends Location {
 
+    @Id
+    @GeneratedValue
+    private Integer id;
 
+    @OneToMany (cascade = CascadeType.ALL,
+            orphanRemoval = true)
     private List<BackpackItem> items;
 
     public Backpack () {
@@ -45,5 +53,21 @@ public class Backpack extends Location {
                 .map(e -> e.getName().toLowerCase())
                 .collect(Collectors.toList())
                 .contains(itemName.toLowerCase());
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
+    }
+
+    public List<BackpackItem> getItems() {
+        return items;
+    }
+
+    public void setItems(List<BackpackItem> items) {
+        this.items = items;
     }
 }

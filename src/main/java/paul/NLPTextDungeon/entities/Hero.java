@@ -10,11 +10,10 @@ import paul.NLPTextDungeon.parsing.InputType;
 import paul.NLPTextDungeon.parsing.TextInterface;
 import paul.NLPTextDungeon.parsing.UserInterfaceClass;
 import paul.NLPTextDungeon.utils.*;
-import paul.NLPTextDungeon.entities.obstacles.Chasm;
 import paul.NLPTextDungeon.enums.Direction;
 import paul.NLPTextDungeon.enums.SpeakingVolume;
-import paul.NLPTextDungeon.interfaces.listeners.OnPickup;
 
+import javax.persistence.*;
 import java.util.*;
 import java.util.stream.Collectors;
 
@@ -25,20 +24,35 @@ import static paul.NLPTextDungeon.enums.LevelUpCategory.NEW_SPELL;
 /**
  * Created by Paul Dennis on 8/8/2017.
  */
+@Entity
+@Table(name = "heroes")
 public class Hero extends UserInterfaceClass {
+
+    @Id
+    @GeneratedValue
+    private Integer id;
 
     private String name;
 
-    private int health;
-    private int maxHealth;
+    @Column(name = "maxhealth")
+    private Integer maxHealth;
 
-    private int might;
-    private int magic;
-    private int sneak;
-    private int defense;
-    private int maxSpellsPerDay;
+    private Integer might;
+    private Integer magic;
+    private Integer sneak;
+    private Integer defense;
 
-    //Base chance to be hit is 50%
+    @Column(name = "maxspellsperday")
+    private Integer maxSpellsPerDay;
+
+    private Integer level;
+    private Integer exp;
+
+    @OneToOne (cascade = CascadeType.ALL,
+            orphanRemoval = true)
+    private Backpack backpack;
+
+    //Base chance to be hit is 50% **changed to 80% I think?
     //Every 2 points of defense reduces chance to be hit 5%
 
     //Damage is reduced by 2 for every 5 points of defense
@@ -58,11 +72,7 @@ public class Hero extends UserInterfaceClass {
     //My chance to hit: 10-20 damage, 55% accurate
     //Your chance to hit: 10-22, 45% accurate
 
-    private int level;
-    private int exp;
-
-    private Backpack backpack;
-
+    private transient int health;
     private transient int mightMod;
     private transient int magicMod;
     private transient int sneakMod;
@@ -87,11 +97,11 @@ public class Hero extends UserInterfaceClass {
     public static final double TORCH_LIGHT = 1.0;
     public static final int POTION_VALUE = 9;
 
-
     public Hero () {
         random = new Random();
         backpack = new Backpack();
         initMaps();
+        name = "Biff the Understudy";
     }
 
     public Hero (String standard) {
@@ -101,6 +111,7 @@ public class Hero extends UserInterfaceClass {
         might = 4;
         magic = 2;
         sneak = 0;
+        defense = 1;
 
         level = 0;
         exp = 0;
@@ -114,6 +125,7 @@ public class Hero extends UserInterfaceClass {
         //For debug. Todo; remove
         backpack.add(new BackpackItem("Boots of Vaulting"));
         initMaps();
+        name = "Biff the Understudy";
     }
 
     @Override
@@ -725,5 +737,13 @@ public class Hero extends UserInterfaceClass {
 
     public void setPreviousLocation(DungeonRoom previousLocation) {
         this.previousLocation = previousLocation;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }

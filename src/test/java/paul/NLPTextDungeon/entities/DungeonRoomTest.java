@@ -3,6 +3,7 @@ package paul.NLPTextDungeon.entities;
 import org.junit.Test;
 import paul.NLPTextDungeon.entities.obstacles.Chasm;
 
+import java.io.FileNotFoundException;
 import java.util.List;
 
 import static org.junit.Assert.*;
@@ -46,7 +47,6 @@ public class DungeonRoomTest {
         room.addObstacle(chasm);
 
         assertFalse(room.isCleared());
-
         chasm.attempt("jump", new Hero());
         assertTrue(chasm.isCleared());
         assertTrue(room.isCleared());

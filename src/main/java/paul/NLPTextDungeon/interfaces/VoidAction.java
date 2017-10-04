@@ -6,6 +6,7 @@ import paul.NLPTextDungeon.entities.DungeonRoom;
 /**
  * Created by Paul Dennis on 8/8/2017.
  */
+@FunctionalInterface
 public interface VoidAction {
     void doAction(DungeonRoom room);
 }

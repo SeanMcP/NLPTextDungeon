@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8"/>
+    <title>Heroes</title>
+</head>
+<body>
+Here is a list of the saved heroes:<br>
+<ul>
+    {{#heroes}}
+    <li>
+        {{name}}
+        <ul>
+            {{#backpack.items}}
+            <li>
+                {{name}}
+            </li>
+            {{/backpack.items}}
+        </ul>
+    </li>
+    {{/heroes}}
+</ul>
+</body>
+</html>

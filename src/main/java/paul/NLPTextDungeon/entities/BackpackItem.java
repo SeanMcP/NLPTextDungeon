@@ -3,6 +3,11 @@ package paul.NLPTextDungeon.entities;
 import com.fasterxml.jackson.annotation.JsonSubTypes;
 import com.fasterxml.jackson.annotation.JsonTypeInfo;
 
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 /**
  * Created by Paul Dennis on 8/8/2017.
  */
@@ -14,13 +19,18 @@ import com.fasterxml.jackson.annotation.JsonTypeInfo;
 @JsonSubTypes({
         @JsonSubTypes.Type(value = Note.class, name = "note")
 })
+@Entity
+@Table(name = "items")
 public class BackpackItem extends DungeonRoomEntity {
 
+    @Id
+    @GeneratedValue
+    private Integer id;
     private String name;
-    private boolean isQuestItem;
-    private int value;
-    private String onPickup;
-    private boolean darklight; //Item can only be seen in the dark
+    private Integer value;
+
+    private transient String onPickup;
+    private transient boolean darklight; //Item can only be seen in the dark
 
     public BackpackItem () {
 
@@ -28,7 +38,6 @@ public class BackpackItem extends DungeonRoomEntity {
 
     public BackpackItem (String name) {
         this.name = name;
-        isQuestItem = false;
     }
 
     public BackpackItem(String name, int value) {
@@ -42,14 +51,6 @@ public class BackpackItem extends DungeonRoomEntity {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public boolean isQuestItem() {
-        return isQuestItem;
-    }
-
-    public void setQuestItem(boolean questItem) {
-        isQuestItem = questItem;
     }
 
     public int getValue() {
@@ -91,5 +92,13 @@ public class BackpackItem extends DungeonRoomEntity {
 
     public void setDarklight(boolean darklight) {
         this.darklight = darklight;
+    }
+
+    public Integer getId() {
+        return id;
+    }
+
+    public void setId(Integer id) {
+        this.id = id;
     }
 }
