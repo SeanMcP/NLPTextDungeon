@@ -123,7 +123,7 @@ public class Hero extends UserInterfaceClass {
         backpack.add(new BackpackItem("Bow"));
 
         //For debug. Todo; remove
-        backpack.add(new BackpackItem("Boots of Vaulting"));
+        //backpack.add(new BackpackItem("Boots of Vaulting"));
         initMaps();
         name = "Biff the Understudy";
     }
